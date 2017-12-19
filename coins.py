@@ -19,7 +19,7 @@ def print_result(result, output_file):
 def sort_key(country):
     """Calculate unified key for country(tuple(country_name, country_params))."""
     # ord(country[COUNTRY_NAME][FIRST_LETTER]) - ord('A') -- serial number of the first letter of country name in english alphabet
-    return country[COUNTRY_NAME]['result_day'] * 26 + (ord(country[COUNTRY_NAME][FIRST_LETTER]) - ord('A'))
+    return country[COUNTRY_PARAMS]['result_day'] * 26 + (ord(country[COUNTRY_NAME][FIRST_LETTER]) - ord('A'))
 
 def sort_countries(countries):
     """Sort dictionary of countries by unified key and make result list of tuples(country_name, country_params)."""
