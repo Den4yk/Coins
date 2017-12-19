@@ -1,9 +1,14 @@
 from sys import argv
 from copy import deepcopy
 
+#main constants
 MAX_SIZE = 10
 TRANS_COEF = 1000
 START_MONEY = 1000000
+#country tuple constants
+COUNTRY_NAME = 0
+COUNTRY_PARAMS = 1
+FIRST_LETTER = 0
 
 def print_result(result, output_file):
     """Print result(list of tuples(country_name, country_params)) to output_file."""
@@ -12,8 +17,9 @@ def print_result(result, output_file):
         output_file.write(country_name + " " + str(country_params['result_day']) + '\n')
 
 def sort_key(country):
-    """Calculate unified key for country."""
-    return country[1]['result_day'] * 26 + (ord(country[0][0]) - ord('A'))
+    """Calculate unified key for country(tuple(country_name, country_params))."""
+    # ord(country[COUNTRY_NAME][FIRST_LETTER]) - ord('A') -- serial number of the first letter of country name in english alphabet
+    return country[COUNTRY_NAME]['result_day'] * 26 + (ord(country[COUNTRY_NAME][FIRST_LETTER]) - ord('A'))
 
 def sort_countries(countries):
     """Sort dictionary of countries by unified key and make result list of tuples(country_name, country_params)."""
