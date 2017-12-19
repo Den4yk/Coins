@@ -6,17 +6,21 @@ TRANS_COEF = 1000
 START_MONEY = 1000000
 
 def print_result(result, output_file):
+    """Print result(list of tuples(country_name, country_params)) to output_file."""
     output_file.write("Case Number " + str(case) + '\n')
     for country_name, country_params in result:
         output_file.write(country_name + " " + str(country_params['result_day']) + '\n')
 
 def sort_key(country):
+    """Calculate unified key for country."""
     return country[1]['result_day'] * 26 + (ord(country[0][0]) - ord('A'))
 
 def sort_countries(countries):
+    """Sort dictionary of countries by unified key and make result list of tuples(country_name, country_params)."""
     return sorted(countries.items(), key=sort_key)
 
 def checkEnding(country_map, countries, day):
+    """Check if each country is completed, return True if all countries are completed, False otherwise."""
     for (i, line) in enumerate(country_map):
         for (j, elem) in enumerate(line):
             if (None != elem):
@@ -33,6 +37,7 @@ def checkEnding(country_map, countries, day):
     return True
 
 def coinsTransfers(country_map):
+    """Getting begin-day map country_map, make coins transactions, fill new matrix and return it."""
     matrix = deepcopy(country_map)
     for (i, line) in enumerate(country_map):
         for (j, elem) in enumerate(line):
@@ -52,6 +57,7 @@ def coinsTransfers(country_map):
     return matrix
 
 def coinsProcess(country_map, countries):
+    """Main task cycle. Return resulting dictionary of countries when checkEnding is True, execute coinsTransfers otherwise."""
     day = 0
     while True:
         if checkEnding(country_map, countries, day):
@@ -60,6 +66,7 @@ def coinsProcess(country_map, countries):
         day += 1
 
 def makeMatrix(input_file, count):
+    """Reading input data of count countries from input_file, fill first-day matrix, dictionary of coutries and return them."""
     matrix = [[None for i in xrange(MAX_SIZE)] for i in xrange(MAX_SIZE)]
     countries = {}
     for cnt in xrange(count):
