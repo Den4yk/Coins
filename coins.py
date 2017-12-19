@@ -1,4 +1,4 @@
-from sys import argv
+from sys import argv, stdout
 from copy import deepcopy
 
 #main constants
@@ -94,9 +94,12 @@ def makeMatrix(input_file, count):
 
 if __name__ == "__main__":
     INPUT_FILE  = "input.txt" if len(argv) == 1 else argv[1]
-    OUTPUT_FILE = "output.txt"
+    OUTPUT_FILE = None if len(argv) <= 2 else argv[2]
     IFILE = open(INPUT_FILE)
-    OFILE = open(OUTPUT_FILE, "w")
+    if OUTPUT_FILE == None:
+        OFILE = stdout
+    else:
+        OFILE = open(OUTPUT_FILE, "w")
     count = int(IFILE.readline())
     case = 1
     while 0 < count:
