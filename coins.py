@@ -23,16 +23,16 @@ def checkEnding(country_map, countries, day):
     """Check if each country is completed, return True if all countries are completed, False otherwise."""
     for (i, line) in enumerate(country_map):
         for (j, elem) in enumerate(line):
-            if (None != elem):
-                if (0 == elem['money'].count(0)) and ((i, j) not in countries[elem['country_name']]['completed_towns']):
+            if (elem != None):
+                if (elem['money'].count(0) == 0) and ((i, j) not in countries[elem['country_name']]['completed_towns']):
                     countries[elem['country_name']]['completed_towns'].append((i, j))
-                    if (-1 == countries[elem['country_name']]['result_day']) and (len(countries[elem['country_name']]['completed_towns']) == countries[elem['country_name']]['towns_count']):
+                    if (countries[elem['country_name']]['result_day'] == -1) and (len(countries[elem['country_name']]['completed_towns']) == countries[elem['country_name']]['towns_count']):
                         countries[elem['country_name']]['result_day'] = day
-                elif (0 != elem['money'].count(0)) and ((i, j) in countries[elem['country_name']]['completed_towns']):
+                elif (elem['money'].count(0) != 0) and ((i, j) in countries[elem['country_name']]['completed_towns']):
                     countries[elem['country_name']]['completed_towns'].remove((i, j))
 
     for country in countries.values():
-        if -1 == country['result_day']:
+        if country['result_day'] == -1:
             return False
     return True
 
@@ -41,17 +41,17 @@ def coinsTransfers(country_map):
     matrix = deepcopy(country_map)
     for (i, line) in enumerate(country_map):
         for (j, elem) in enumerate(line):
-            if None != elem:
-                if (0 < i and None != matrix[i - 1][j]):
+            if elem != None:
+                if (0 < i and matrix[i - 1][j] != None):
                     matrix[i][j]['money'] = map(lambda x, y: x - (y / TRANS_COEF), matrix[i][j]['money'], elem['money'])
                     matrix[i - 1][j]['money'] = map(lambda x, y: x + (y / TRANS_COEF), matrix[i - 1][j]['money'], elem['money'])
-                if (0 < j and None != matrix[i][j - 1]):
+                if (0 < j and matrix[i][j - 1] != None):
                     matrix[i][j]['money'] = map(lambda x, y: x - (y / TRANS_COEF), matrix[i][j]['money'], elem['money'])
                     matrix[i][j - 1]['money'] = map(lambda x, y: x + (y / TRANS_COEF), matrix[i][j - 1]['money'], elem['money'])
-                if (i < (MAX_SIZE - 1) and None != matrix[i + 1][j]):
+                if (i < (MAX_SIZE - 1) and matrix[i + 1][j] != None):
                     matrix[i][j]['money'] = map(lambda x, y: x - (y / TRANS_COEF), matrix[i][j]['money'], elem['money'])
                     matrix[i + 1][j]['money'] = map(lambda x, y: x + (y / TRANS_COEF), matrix[i + 1][j]['money'], elem['money'])
-                if (j < (MAX_SIZE - 1) and None != matrix[i][j + 1]):
+                if (j < (MAX_SIZE - 1) and matrix[i][j + 1] != None):
                     matrix[i][j]['money'] = map(lambda x, y: x - (y / TRANS_COEF), matrix[i][j]['money'], elem['money'])
                     matrix[i][j + 1]['money'] = map(lambda x, y: x + (y / TRANS_COEF), matrix[i][j + 1]['money'], elem['money'])
     return matrix
@@ -87,7 +87,7 @@ def makeMatrix(input_file, count):
     return (matrix, countries)
 
 if __name__ == "__main__":
-    input_file  = "input.txt" if 1 == len(argv) else argv[1]
+    input_file  = "input.txt" if len(argv) == 1 else argv[1]
     output_file = "output.txt"
     ifile = open(input_file)
     ofile = open(output_file, "w")
