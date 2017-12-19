@@ -87,19 +87,19 @@ def makeMatrix(input_file, count):
     return (matrix, countries)
 
 if __name__ == "__main__":
-    input_file  = "input.txt" if len(argv) == 1 else argv[1]
-    output_file = "output.txt"
-    ifile = open(input_file)
-    ofile = open(output_file, "w")
-    count = int(ifile.readline())
+    INPUT_FILE  = "input.txt" if len(argv) == 1 else argv[1]
+    OUTPUT_FILE = "output.txt"
+    IFILE = open(INPUT_FILE)
+    OFILE = open(OUTPUT_FILE, "w")
+    count = int(IFILE.readline())
     case = 1
     while 0 < count:
-        (country_map, countries) = makeMatrix(ifile, count)
+        (country_map, countries) = makeMatrix(IFILE, count)
         countries = coinsProcess(country_map, countries)
         result = sort_countries(countries)
-        print_result(result, ofile)
-        count = int(ifile.readline())
+        print_result(result, OFILE)
+        count = int(IFILE.readline())
         case += 1
-    ifile.close()
-    ofile.close()
+    IFILE.close()
+    OFILE.close()
         
