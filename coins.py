@@ -47,19 +47,22 @@ def coinsTransfers(country_map):
     matrix = deepcopy(country_map)
     for (i, line) in enumerate(country_map):
         for (j, elem) in enumerate(line):
-            if elem != None:
-                if (0 < i and matrix[i - 1][j] != None):
-                    matrix[i][j]['money'] = map(lambda x, y: x - (y / TRANS_COEF), matrix[i][j]['money'], elem['money'])
-                    matrix[i - 1][j]['money'] = map(lambda x, y: x + (y / TRANS_COEF), matrix[i - 1][j]['money'], elem['money'])
-                if (0 < j and matrix[i][j - 1] != None):
-                    matrix[i][j]['money'] = map(lambda x, y: x - (y / TRANS_COEF), matrix[i][j]['money'], elem['money'])
-                    matrix[i][j - 1]['money'] = map(lambda x, y: x + (y / TRANS_COEF), matrix[i][j - 1]['money'], elem['money'])
-                if (i < (MAX_SIZE - 1) and matrix[i + 1][j] != None):
-                    matrix[i][j]['money'] = map(lambda x, y: x - (y / TRANS_COEF), matrix[i][j]['money'], elem['money'])
-                    matrix[i + 1][j]['money'] = map(lambda x, y: x + (y / TRANS_COEF), matrix[i + 1][j]['money'], elem['money'])
-                if (j < (MAX_SIZE - 1) and matrix[i][j + 1] != None):
-                    matrix[i][j]['money'] = map(lambda x, y: x - (y / TRANS_COEF), matrix[i][j]['money'], elem['money'])
-                    matrix[i][j + 1]['money'] = map(lambda x, y: x + (y / TRANS_COEF), matrix[i][j + 1]['money'], elem['money'])
+            if elem == None:
+                continue
+
+            if (0 < i and matrix[i - 1][j] != None):
+                matrix[i][j]['money'] = map(lambda x, y: x - (y / TRANS_COEF), matrix[i][j]['money'], elem['money'])
+                matrix[i - 1][j]['money'] = map(lambda x, y: x + (y / TRANS_COEF), matrix[i - 1][j]['money'], elem['money'])
+            if (0 < j and matrix[i][j - 1] != None):
+                matrix[i][j]['money'] = map(lambda x, y: x - (y / TRANS_COEF), matrix[i][j]['money'], elem['money'])
+                matrix[i][j - 1]['money'] = map(lambda x, y: x + (y / TRANS_COEF), matrix[i][j - 1]['money'], elem['money'])
+            if (i < (MAX_SIZE - 1) and matrix[i + 1][j] != None):
+                matrix[i][j]['money'] = map(lambda x, y: x - (y / TRANS_COEF), matrix[i][j]['money'], elem['money'])
+                matrix[i + 1][j]['money'] = map(lambda x, y: x + (y / TRANS_COEF), matrix[i + 1][j]['money'], elem['money'])
+            if (j < (MAX_SIZE - 1) and matrix[i][j + 1] != None):
+                matrix[i][j]['money'] = map(lambda x, y: x - (y / TRANS_COEF), matrix[i][j]['money'], elem['money'])
+                matrix[i][j + 1]['money'] = map(lambda x, y: x + (y / TRANS_COEF), matrix[i][j + 1]['money'], elem['money'])
+
     return matrix
 
 def coinsProcess(country_map, countries):
