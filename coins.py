@@ -25,6 +25,12 @@ def sort_countries(countries):
     """Sort dictionary of countries by unified key and make result list of tuples(country_name, country_params)."""
     return sorted(countries.items(), key=sort_key)
 
+def is_country_counted(country):
+    return (country['result_day'] != -1)
+
+def is_country_completed(country):
+    return (len(country['completed_towns']) == country['towns_count'])
+
 def checkEnding(country_map, countries, day):
     """Check if each country is completed, return True if all countries are completed, False otherwise."""
     for (i, line) in enumerate(country_map):
@@ -32,7 +38,7 @@ def checkEnding(country_map, countries, day):
             if (elem != None):
                 if (elem['money'].count(0) == 0) and ((i, j) not in countries[elem['country_name']]['completed_towns']):
                     countries[elem['country_name']]['completed_towns'].append((i, j))
-                    if (countries[elem['country_name']]['result_day'] == -1) and (len(countries[elem['country_name']]['completed_towns']) == countries[elem['country_name']]['towns_count']):
+                    if ((not is_country_counted(countries[elem['country_name']])) and is_country_completed(countries[elem['country_name']])):
                         countries[elem['country_name']]['result_day'] = day
                 elif (elem['money'].count(0) != 0) and ((i, j) in countries[elem['country_name']]['completed_towns']):
                     countries[elem['country_name']]['completed_towns'].remove((i, j))
